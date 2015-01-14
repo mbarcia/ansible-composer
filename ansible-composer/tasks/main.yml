@@ -1,0 +1,11 @@
+---
+
+- name: install Composer
+  shell: curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer creates=/usr/local/bin/composer
+  sudo: true
+
+- name: add Composer vendor directory to path
+  lineinfile: dest=~/.bashrc state=present line='export PATH=$PATH:~/.composer/vendor/bin/'
+
+- name: initialize Composer metadata
+  command: composer selfupdate
