@@ -1,11 +1,19 @@
 ---
-
-- name: install Composer
+- name: composer | install Composer (shared)
   shell: curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer creates=/usr/local/bin/composer
+  tags: composer
   sudo: true
 
-- name: add Composer vendor directory to path
-  lineinfile: dest=~/.bashrc state=present line='export PATH=$PATH:~/.composer/vendor/bin/'
+- name: composer | prepare Composer shared directory
+  file:
+    path=/usr/share/composer
+    state=directory
+  tags: composer
 
-- name: initialize Composer metadata
-  command: composer selfupdate
+- name: composer | add Composer shared vendor directory to path
+  template: 
+    src=composer.sh
+    dest=/etc/profile.d/composer.sh
+    mode="a+x"
+  tags: composer
+  sudo: true
