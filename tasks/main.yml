@@ -2,7 +2,6 @@
 - name: composer | install Composer (shared)
   shell: curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer creates=/usr/local/bin/composer
   tags: composer
-  sudo: true
 
 - name: composer | prepare Composer shared directory
   file:
@@ -16,4 +15,3 @@
     dest=/etc/profile.d/composer.sh
     mode="a+x"
   tags: composer
-  sudo: true
