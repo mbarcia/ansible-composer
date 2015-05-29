@@ -1,2 +1,2 @@
-# ansible-composer
-Ansible role for managing PHP composer tool
+# drupsible-composer
+Drupsible role for managing PHP composer tool
