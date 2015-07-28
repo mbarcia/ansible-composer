@@ -1,17 +1,17 @@
 ---
-- name: Install Composer (shared).
+- name: Install Composer (shared)
   shell: "curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer"
   args:
     creates: "/usr/local/bin/composer" 
   sudo: yes
 
-- name: Prepare Composer shared directory.
+- name: Prepare Composer shared directory
   file:
     path: /usr/share/composer
     state: directory
   sudo: yes
 
-- name: Add Composer shared vendor directory to path.
+- name: Add Composer shared vendor directory to path
   template: 
     src: composer.sh
     dest: /etc/profile.d/composer.sh
