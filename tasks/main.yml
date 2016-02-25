@@ -1,19 +1,25 @@
 ---
-- name: Install Composer (shared)
-  shell: "curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer"
-  args:
-    creates: "/usr/local/bin/composer" 
-  sudo: yes
+- name: Download setup script
+  get_url:
+    url: https://getcomposer.org/installer
+    dest: /tmp/composer-setup.php
+    checksum: "sha384:fd26ce67e3b237fffd5e5544b45b0d92c41a4afe3e3f778e942e43ce6be197b9cdc7c251dcde6e2a52297ea269370680"
 
-- name: Prepare Composer shared directory
+- name: Run setup script
+  command: php /tmp/composer-setup.php -- --install-dir=/usr/local/bin/ --filename=composer creates=/usr/local/bin/composer
+
+- name: Remove setup script
+  file: 
+    path: /tmp/composer-setup.php
+    state: absent
+
+- name: Prepare shared directory
   file:
     path: /usr/share/composer
     state: directory
-  sudo: yes
 
-- name: Add Composer shared vendor directory to path
+- name: Add shared vendor directory to path
   template: 
     src: composer.sh
     dest: /etc/profile.d/composer.sh
     mode: "a+x"
-  sudo: yes
