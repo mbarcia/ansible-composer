@@ -12,5 +12,8 @@ galaxy_info:
       versions:
         - wheezy
         - jessie
-  categories:
-    - web
+  galaxy_tags:
+  - composer
+  - php
+  - drupal
+  - drupsible
