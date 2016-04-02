@@ -7,7 +7,7 @@
   get_url:
     url: https://getcomposer.org/installer
     dest: /tmp/composer-setup.php
-    checksum: "sha384:41e71d86b40f28e771d4bb662b997f79625196afcca95a5abf44391188c695c6c1456e16154c75a211d238cc3bc5cb47"
+    checksum: "{{ composer_checksum }}"
   when: not composer_binary.stat.exists
 
 - name: Run setup script
