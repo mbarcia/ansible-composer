@@ -10,22 +10,35 @@ PHP installed and available globally as a command "php".
 
 This role can be used indepedently and does NOT require Drupsible to run.
 
-Example Playbook (latest version of composer)
+Example Playbook (latest installer, version 1.0.0 of composer)
 ---------------------------------------------
 
 ```
 - role: drupsible.composer
+  composer_installer_url: "https://getcomposer.org/installer"
+  composer_installer_checksum_enabled: no
+  composer_version_latest_enabled: no 
+  composer_version: "--version=1.0.0" 
   become: yes
   tags: [ 'role::composer' ]
 ```
 
-Example Playbook with a previous version
-----------------------------------------
+Example Playbook (latest installer and latest version of composer)
+---------------------------------------------
 
 ```
 - role: drupsible.composer
-  composer_latest_version_enabled: no
-  composer_version: "--version=1.0.1"
+  composer_installer_url: "https://getcomposer.org/installer"
+  composer_installer_checksum_enabled: no
+  become: yes
+  tags: [ 'role::composer' ]
+```
+
+Example Playbook (installer with checksum of 28/4/2016, and latest version of composer)
+---------------------------------------------
+
+```
+- role: drupsible.composer
   become: yes
   tags: [ 'role::composer' ]
 ```
