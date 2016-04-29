@@ -1,4 +1,7 @@
 ---
-# This is the only checksum provided by getcomposer.org, and it changes frequently.
-# Refer to https://composer.github.io/pubkeys.html
-composer_checksum: "sha384:7228c001f88bee97506740ef0888240bd8a760b046ee16db8f4095c0d8d525f2367663f22a46b48d072c816e7fe19959"
+composer_version_latest_enabled: True
+composer_version: "--version=1.0.2" 
+
+composer_installer_url: "https://raw.githubusercontent.com/composer/getcomposer.org/893c4cd02ea97e73277d7c227631fb89126a74b8/web/installer"
+# Taken from https://composer.github.io/pubkeys.html
+composer_installer_checksum: "sha384:a52be7b8724e47499b039d53415953cc3d5b459b9d9c0308301f867921c19efc623b81dfef8fc2be194a5cf56945d223"
