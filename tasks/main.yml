@@ -3,15 +3,21 @@
   stat: path=/usr/local/bin/composer
   register: composer_binary
 
-- name: Download setup script if it doesn't exist
+- name: Download setup script
   get_url:
-    url: https://getcomposer.org/installer
+    url: "{{ composer_installer_url }}"
     dest: /tmp/composer-setup.php
-    checksum: "{{ composer_checksum }}"
-  when: not composer_binary.stat.exists
+    checksum: "{{ composer_installer_checksum }}"
+  when: not composer_binary.stat.exists and composer_installer_checksum_enabled|default(True)|bool
+
+- name: Download setup script (no checksum)
+  get_url:
+    url: "{{ composer_installer_url }}"
+    dest: /tmp/composer-setup.php
+  when: not composer_binary.stat.exists and not composer_installer_checksum_enabled|default(True)|bool
 
 - name: Run setup script
-  command: php /tmp/composer-setup.php -- --install-dir=/usr/local/bin/ --filename=composer creates=/usr/local/bin/composer
+  command: "php /tmp/composer-setup.php -- --install-dir=/usr/local/bin/ {{ composer_version_latest_enabled|default(True)|bool|ternary('', composer_version) }} --filename=composer creates=/usr/local/bin/composer"
 
 - name: Get rid of the downloaded setup script
   file: 
