@@ -1,7 +1,7 @@
 ---
 # Always get the latest version of composer
 composer_version_latest_enabled: yes
-# This only takes effect is composer_version_latest_enabled is no
+# This only takes effect when composer_version_latest_enabled is no
 composer_version: "--version=1.0.2" 
 
 # Set to https://getcomposer.org/installer for running the latest version of the installer script
