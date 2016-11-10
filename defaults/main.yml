@@ -2,11 +2,11 @@
 # Always get the latest version of composer
 composer_version_latest_enabled: yes
 # This only takes effect when composer_version_latest_enabled is no
-composer_version: "--version=1.0.3" 
+composer_version: "--version=1.0.3"
 
 # Set to https://getcomposer.org/installer for running the latest version of the installer script
 composer_installer_url: "https://raw.githubusercontent.com/composer/getcomposer.org/b333c68d89df01f5f2d22004e8f4bdc69352339f/web/installer"
 # Set this to no for the latest version of the installer script
 composer_installer_checksum_enabled: yes
 # Taken from https://composer.github.io/pubkeys.html
-composer_installer_checksum: "sha384:92102166af5abdb03f49ce52a40591073a7b859a86e8ff13338cf7db58a19f7844fbc0bb79b2773bf30791e935dbd938"
+composer_installer_checksum: "sha384:aa96f26c2b67226a324c27919f1eb05f21c248b987e6195cad9690d5c1ff713d53020a02ac8c217dbf90a7eacc9d141d"
