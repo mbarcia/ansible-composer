@@ -18,10 +18,8 @@
   when: composer_installer_checksum_enabled|d(True)|bool
 
 - name: Checksum of the downloaded script
-  command: "sha384sum -c /tmp/composer-setup.txt"
-  register: composer_sha384sum_output
+  shell: "sha384sum -c /tmp/composer-setup.txt | grep OK"
   when: composer_installer_checksum_enabled|d(True)|bool
-  failed_when: not composer_sha384sum_output.stdout|search('OK')
 
 - name: Get rid of the checksum spec
   file: 
