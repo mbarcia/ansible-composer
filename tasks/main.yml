@@ -1,27 +1,23 @@
 ---
 - name: Check whether Composer already exists
-  stat: path=/usr/local/bin/composer
+  stat: 
+    path: '/usr/local/bin/composer'
   register: composer_binary
 
-- name: Download setup script
-  get_url:
-    url: "{{ composer_installer_url }}"
-    dest: /tmp/composer-setup.php
-    checksum: "{{ composer_installer_checksum }}"
-  when: not composer_binary.stat.exists and composer_installer_checksum_enabled|default(True)|bool
+- include: setup-with-wget.yml
+  when: not composer_binary.stat.exists and ansible_python_version|version_compare('2.7.9', '<')
+  tags: [ provision ]
 
-- name: Download setup script (no checksum)
-  get_url:
-    url: "{{ composer_installer_url }}"
-    dest: /tmp/composer-setup.php
-  when: not composer_binary.stat.exists and not composer_installer_checksum_enabled|default(True)|bool
+- include: setup-with-get-url.yml
+  when: not composer_binary.stat.exists and ansible_python_version|version_compare('2.7.9', '>=')
+  tags: [ provision ]
 
 - name: Run setup script
-  command: "php /tmp/composer-setup.php -- --install-dir=/usr/local/bin/ {{ composer_version_latest_enabled|default(True)|bool|ternary('', composer_version) }} --filename=composer creates=/usr/local/bin/composer"
+  command: "php {{ composer_setup_filename }} -- --install-dir=/usr/local/bin/ {{ composer_version_latest_enabled|default(True)|bool|ternary('', composer_version) }} --filename=composer creates=/usr/local/bin/composer"
 
 - name: Get rid of the downloaded setup script
   file: 
-    path: /tmp/composer-setup.php
+    path: "{{ composer_setup_filename }}"
     state: absent
 
 - name: Prepare shared directory

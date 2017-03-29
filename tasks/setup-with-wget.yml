@@ -1,0 +1,28 @@
+---
+- name: Make sure wget and sha384sum are present when python < 2.7.9
+  package:
+    name: "{{ item }}"
+    state: present
+    use: apt
+  with_items:
+  - wget
+  - coreutils
+
+- name: Download setup script with wget
+  command: "wget -O {{ composer_setup_filename }} {{ composer_installer_url }}"
+  args:
+    creates: "{{ composer_setup_filename }}"
+
+- name: Create checksum spec text file
+  command: "echo '{{ composer_installer_checksum }} {{ composer_setup_filename }}' > /tmp/composer-setup.txt"
+  when: composer_installer_checksum_enabled|d(True)|bool
+
+- name: Checksum of the downloaded script
+  command: "sha384sum -c /tmp/composer-setup.txt | grep OK"
+  when: composer_installer_checksum_enabled|d(True)|bool
+
+- name: Get rid of the checksum spec
+  file: 
+    path: /tmp/composer-setup.txt
+    state: absent
+  when: composer_installer_checksum_enabled|d(True)|bool

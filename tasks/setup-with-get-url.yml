@@ -1,0 +1,13 @@
+---
+- name: Download setup script (no checksum)
+  get_url:
+    url: "{{ composer_installer_url }}"
+    dest: "{{ composer_setup_filename }}"
+  when: not composer_installer_checksum_enabled|d(True)|bool
+
+- name: Download setup script
+  get_url:
+    url: "{{ composer_installer_url }}"
+    dest: "{{ composer_setup_filename }}"
+    checksum: "{{ composer_installer_checksum }}"
+  when: composer_installer_checksum_enabled|d(True)|bool
