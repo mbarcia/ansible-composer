@@ -14,7 +14,7 @@
     creates: "{{ composer_setup_filename }}"
 
 - name: Create checksum spec text file
-  command: "echo '{{ composer_installer_checksum }} {{ composer_setup_filename }}' > /tmp/composer-setup.txt"
+  shell: "echo '{{ composer_installer_checksum }} {{ composer_setup_filename }}' > /tmp/composer-setup.txt"
   when: composer_installer_checksum_enabled|d(True)|bool
 
 - name: Checksum of the downloaded script
