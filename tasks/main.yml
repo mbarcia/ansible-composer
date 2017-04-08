@@ -4,12 +4,19 @@
     path: '/usr/local/bin/composer'
   register: composer_binary
 
+- name: Check python version from shell
+  shell: python --version 2>&1 | sed 's/^Python \([0-9\.]*\)$/\1/'
+  register: shell_python_version_output
+  
+- set_fact:
+    composer_python_version__: ansible_python_version|d(shell_python_version_output)
+    
 - include: setup-with-wget.yml
-  when: not composer_binary.stat.exists and ansible_python_version|version_compare('2.7.9', '<')
+  when: not composer_binary.stat.exists and composer_python_version__|version_compare('2.7.9', '<')
   tags: [ provision ]
 
 - include: setup-with-get-url.yml
-  when: not composer_binary.stat.exists and ansible_python_version|version_compare('2.7.9', '>=')
+  when: not composer_binary.stat.exists and composer_python_version__|version_compare('2.7.9', '>=')
   tags: [ provision ]
 
 - name: Run setup script
