@@ -9,15 +9,13 @@
   register: shell_python_version_output
   
 - set_fact:
-    composer_python_version__: ansible_python_version|d(shell_python_version_output.stdout)
+    composer_python_version__: "{{ ansible_python_version|d(shell_python_version_output.stdout) }}"
     
 - include: setup-with-wget.yml
   when: not composer_binary.stat.exists and composer_python_version__|version_compare('2.7.9', '<')
-  tags: [ provision ]
 
 - include: setup-with-get-url.yml
   when: not composer_binary.stat.exists and composer_python_version__|version_compare('2.7.9', '>=')
-  tags: [ provision ]
 
 - name: Run setup script
   command: "php {{ composer_setup_filename }} -- --install-dir=/usr/local/bin/ {{ composer_version_latest_enabled|default(True)|bool|ternary('', composer_version) }} --filename=composer creates=/usr/local/bin/composer"
