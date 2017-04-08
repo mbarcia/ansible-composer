@@ -9,7 +9,7 @@
   register: shell_python_version_output
   
 - set_fact:
-    composer_python_version__: ansible_python_version|d(shell_python_version_output)
+    composer_python_version__: ansible_python_version|d(shell_python_version_output.stdout)
     
 - include: setup-with-wget.yml
   when: not composer_binary.stat.exists and composer_python_version__|version_compare('2.7.9', '<')
