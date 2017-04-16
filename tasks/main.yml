@@ -7,6 +7,8 @@
 - name: Check python version from shell
   shell: python --version 2>&1 | sed 's/^Python \([0-9\.]*\)$/\1/'
   register: shell_python_version_output
+  changed_when: False
+  when: ansible_python_version is not defined
   
 - set_fact:
     composer_python_version__: "{{ ansible_python_version|d(shell_python_version_output.stdout) }}"
